@@ -2,7 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>wikiseum</title>
+  <title>Wikiseum: Map</title>
+
+  <link rel="stylesheet" href="map.css">
 
   <script src="node_modules/leaflet/dist/leaflet-src.js"></script>
   <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
@@ -12,43 +14,7 @@
   <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">
 </head>
 <body>
-lol
-
-<div id="map" style="height:300px;">
-</div>
-<script type="text/javascript">
-var map = L.map('map').setView([51.505, -0.09], 13);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-var markers = L.markerClusterGroup();
-
-markers.addLayer(L.marker([51.5, -0.09]).bindPopup('A pretty CSS3 popup.<br> Easily customizable.'));
-
-map.addLayer( markers );
-
-
-var q = 'SELECT%20DISTINCT%20%3Fcoord%20%3Fcollection%20%3FcollectionLabel%20%28COUNT%28%3Fitem%29%20AS%20%3Fcount%29%20WHERE%20%7B%0A%20%20%3Fitem%20wdt%3AP31%20wd%3AQ3305213.%0A%20%20%3Fitem%20wdt%3AP18%20%3Fimage.%0A%20%20%3Fitem%20%28wdt%3AP195%2Fwdt%3AP361%2a%29%20%3Fcollection.%0A%20%20%3Fcollection%20wdt%3AP625%20%3Fcoord.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20"en".%20%7D%0A%7D%20%0AGROUP%20BY%20%3Fcollection%20%3FcollectionLabel%20%3Fcoord%0AHAVING%20%28%3Fcount%20>%205%29%0AORDER%20BY%20DESC%20%28%3Fcount%29%0A';
-
-runQuery( q ).then( function ( data ) {
-  data.forEach( function (d) {
-    var coord = d.coord.value.substring(6, d.coord.value.length-1).split(' ');
-    coord[0] = +coord[0];
-    coord[1] = +coord[1];
-    markers.addLayer( L.marker( [coord[1],coord[0]] ).bindPopup(d.collectionLabel.value) );
-    console.log( coord );
-  });
-})
-
-function runQuery( query ) {
-return fetch( 'https://query.wikidata.org/sparql?query=' + query + '&format=json' ).then( function (data) {
-    return data.json();
-  }).then( function (json) {
-    return json.results.bindings;
-  });
-}
-</script>
+  <div id="map"></div>
+  <script src="map.js"></script>
 </body>
 </html>
