@@ -51,12 +51,3 @@ function getCoordFromPoint( p ) {
   coord[1] = +coord[1];
   return [ coord[1], coord[0]];
 }
-
-function runQuery( query ) {
-  query = encodeURIComponent(query);
-  return fetch( 'https://query.wikidata.org/sparql?query=' + query + '&format=json' ).then( function (data) {
-    return data.json();
-  }).then( function (json) {
-    return json.results.bindings;
-  });
-}

@@ -57,16 +57,6 @@ function getBase64FromImageUrl(url) {
     img.src = url;
 }
 
-// FIXME This is copied from map.js
-function runQuery( query ) {
-  query = encodeURIComponent(query);
-  return fetch( 'https://query.wikidata.org/sparql?query=' + query + '&format=json' ).then( function (data) {
-    return data.json();
-  }).then( function (json) {
-    return json.results.bindings;
-  });
-}
-
 function getImageUri(uri, size) {
   var file = uri.split( 'Special:FilePath/');
   file = file[ file.length - 1 ];
