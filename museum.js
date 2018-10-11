@@ -36,55 +36,16 @@ runQuery( query ).then( function ( data ) {
   } );
 } );
 
-function getBase64FromImageUrl(url) {
-    var img = new Image();
-
-    img.setAttribute('crossOrigin', 'anonymous');
-
-    img.onload = function () {
-        var canvas = document.createElement("canvas");
-        canvas.width =this.width;
-        canvas.height =this.height;
-
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(this, 0, 0);
-
-        var dataURL = canvas.toDataURL("image/png");
-
-        console.log(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
-    };
-
-    img.src = url;
-}
-
-function getImageUri(uri, size) {
-  var file = uri.split( 'Special:FilePath/');
-  file = file[ file.length - 1 ];
-
-  return 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/'+file+'/100px-'+file;
-  return 'https://commons.wikimedia.org/wiki/Special:FilePath?width=100&file=' + file;
-  return 'https://commons.wikimedia.org/w/thumb.php?width='+size+'&f=' + file;
-}
-
 function getImageThumb(uri,size) {
   var file = uri.split( 'Special:FilePath/');
   file = file[ file.length - 1 ];
   file = unescape( file );
   file = file.split(' ').join('_');
   filemd = md5( file );
-console.log(file);
-  var uri = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' +
+  return 'https://upload.wikimedia.org/wikipedia/commons/thumb/' +
     filemd[0] + '/' + filemd[0] + filemd[1] + '/' + file +
     '/'+size+'px-' + file;
-
-  return uri;
 }
-
-// Amrita_Sger-Gil_Klarra_Szepessy.jpg
-// Amrita Sger-Gil Klarra Szepessy.jpg
-
-
-
 
 AFRAME.registerComponent('set-image', {
   schema: {
