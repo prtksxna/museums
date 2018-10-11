@@ -27,10 +27,10 @@ runQuery( q ).then( function ( data ) {
   data.forEach( function (d) {
     var uri = getImageUri( d.photo.value );
     var popup = `<img src=${uri} width="200"/><br>`;
-
+    var id = d.collection.value.split('Q')[1];
     //https://commons.wikimedia.org/w/thumb.php?width=500&f=20070223%20AlbrightKnox%20Art%20Gallery.JPG
     //20070223%20AlbrightKnox%20Art%20Gallery.JPG
-    popup += `<strong>${d.collectionLabel.value} (${d.count.value})</strong>`
+    popup += `<strong><a href="/museum.html#${id}">${d.collectionLabel.value}</a> (${d.count.value})</strong>`
 
     markers.addLayer(
       L.marker( getCoordFromPoint( d.coord.value ) )
